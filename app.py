@@ -24,4 +24,21 @@ st.text_area(
     label_visibility="visible"
 )
 
-st.button("Click me")
+
+col1, col2 = st.columns(2)  
+
+
+with col2:
+    if st.button(
+        label="Analyze",  
+        key=None,
+        help="Click to analyze your data.",
+        on_click=None,
+        args=None,
+        kwargs=None,
+        type="secondary",  
+        icon=None,
+        disabled=False,
+        use_container_width=False
+    ):
+        st.write("Button clicked!")  
