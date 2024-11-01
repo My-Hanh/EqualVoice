@@ -1,18 +1,26 @@
-from openai import OpenAI
-import streamlit as st
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov  1 23:32:37 2024
 
-
-
-
-
-st.title("Text Bias Detector")
+"""
 
 import streamlit as st
 
-st.text_area(
-    label="",
-    value="",
-    height= 500,  # Let CSS control height
+username = "Stella Muster"
+
+top_bar = st.columns([6, 2])
+
+with top_bar[0]:
+    st.write("")
+    
+with top_bar[1]:
+    st.write(f"👤**{username}**")
+st.write("---")
+
+text_area = st.text_area(
+    label="",  
+    value="",  
+    height=500,  
     max_chars=None,
     key=None,
     help="Enter your text here.",
@@ -25,20 +33,36 @@ st.text_area(
 )
 
 
-col1, col2 = st.columns(2)  
+col1, col2, col3 = st.columns([1, 1, 2])  
 
-
-with col2:
-    if st.button(
-        label="Analyze",  
-        key=None,
-        help="Click to analyze your data.",
-        on_click=None,
-        args=None,
-        kwargs=None,
-        type="secondary",  
-        icon=None,
-        disabled=False,
-        use_container_width=False
-    ):
-        st.write("Button clicked!")  
+with col3:
+    
+    subcol1, subcol2 = st.columns([1, 1])
+    with subcol1:
+        if st.button(
+            label="Analyze", 
+            key=None,
+            help="Click to analyze your text.",
+            on_click=None,
+            args=None,
+            kwargs=None,
+            type="secondary",  
+            icon="🔍",
+            disabled=False,
+            use_container_width=True  
+        ):
+            st.write("Button clicked!")  
+    with subcol2:
+        if st.button(
+            label="Publish", 
+            key=None,
+            help="Click to publish your text.",
+            on_click=None,
+            args=None,
+            kwargs=None,
+            type="secondary",  
+            icon=None,
+            disabled=False,
+            use_container_width=True  
+        ):
+            st.write("Button clicked!")  
