@@ -15,12 +15,15 @@ with top_bar[0]:
     
 with top_bar[1]:
     st.write(f"👤**{username}**")
+    if st.button("Statistics", help="Click to navigate to statistics page"):
+        st.write("Navigating to another page...")
+        
 st.write("---")
 
 text_area = st.text_area(
     label="",  
     value="",  
-    height=500,  
+    height=400,  
     max_chars=None,
     key=None,
     help="Enter your text here.",
