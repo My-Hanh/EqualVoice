@@ -7,7 +7,7 @@ import streamlit as st
 #     "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
 #     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
 
-openai_api_key = "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"
+openai_api_key = "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"
 
 st.title("💬 Chatbot")
 st.caption("🚀 A Streamlit chatbot powered by OpenAI")
