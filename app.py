@@ -146,12 +146,12 @@ if st.session_state.display_result:
 
     #To cancel later
     #show all individual comments
-    st.write("### Breakdown of all possible bias")
-    st.write(st.session_state.all_comments)
+    # st.write("### Breakdown of all possible bias")
+    # st.write(st.session_state.all_comments)
 
-    #show the text
-    st.write("### Text with separators")
-    st.write(st.session_state.marked_text)
+    # #show the text
+    # st.write("### Text with separators")
+    # st.write(st.session_state.marked_text)
 
 else:
     with col3:
