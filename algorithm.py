@@ -15,3 +15,4 @@ global_feedback = "It looks great"
 def analyze(user_text):
     # TODO
     return marked_text, global_feedback
+
