@@ -123,7 +123,7 @@ else:
         }
         </script>
         '''
-    components.html(f'''{js}''')
+    components.html(f'''{js}''', height=0)
 
 
 
