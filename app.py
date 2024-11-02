@@ -19,6 +19,10 @@ if "user_text" not in st.session_state:
     st.session_state.user_text = ""
 
 USER_TEXT_INITIAL_HEIGHT = 500
+INITIAL_TEXT_WIDTH = "100%"
+TEXT_WIDTH_WITH_DETAILS = "70%"
+INITIAL_COMMENT_WIDTH = "0"
+COMMENT_WIDTH_WITH_DETAILS = "30%"
 
 
 
@@ -26,7 +30,7 @@ USER_TEXT_INITIAL_HEIGHT = 500
 style_1 = (".text-with-results {" +
                 "height: " +
                 f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
-                "width: 70%;" + 
+                f"width: {INITIAL_TEXT_WIDTH};" + 
                 "border: 1px solid grey;" + 
                 "border-radius: 5px;" + 
                 "padding: 5px;" + 
@@ -39,7 +43,7 @@ style_2 = """.highlighted {
 style_3 = (".comment-container {" +
                 "height: " +
                 f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
-                "width: 30%;" + 
+                f"width: {INITIAL_COMMENT_WIDTH};" + 
                 "}")
 style_4 = (".comment-container p {" +
                 "border: 1px solid grey;" + 
@@ -103,7 +107,7 @@ else:
     html_with_highlights, all_problems = map_marked_text_to_html(st.session_state.marked_text)
     comments_as_html = get_comments_as_html(["comment", "todo", "hello"])
     st.session_state.all_problems = all_problems
-    st.write(f"""<div class='horizontal'><div class='text-with-results'>{html_with_highlights}</div><div class='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
+    st.write(f"""<div class='horizontal'><div class='text-with-results' id='text-with-results'>{html_with_highlights}</div><div class='comment-container' id='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
 
     js = '''<script>
         highlights = window.parent.document.getElementsByClassName("highlighted");
@@ -111,6 +115,8 @@ else:
             let element = highlights[i];
             element.addEventListener("click", () => {
               console.log('hello');
+              window.parent.document.getElementById("text-with-results").style.width = "''' + TEXT_WIDTH_WITH_DETAILS + '''";
+              window.parent.document.getElementById("comment-container").style.width = "''' + COMMENT_WIDTH_WITH_DETAILS + '''";
               for (let j = 0; j < highlights.length; j++) {
                 let commentsDiv = window.parent.document.getElementById("comment-id-" + j);
                 if (i === j) {
@@ -173,50 +179,10 @@ with col2:
         st.session_state.global_feedback = global_feedback
         st.session_state.display_result = True
 
-        
-
-        # js = '''<script>
-        #     highlighted_elements = window.parent.document.getElementsByClassName("highlighted");
-        #     console.log(highlighted_elements);
-        #     highlighted_elements.forEach(function (element) {
-        #         element.addEventListener("click", (event) => {
-        #             //error_box = window.parent.document.getElementById("loader-block"); 
-        #             //error_box.style.display = "none";
-        #             console.log('hello1');
-        #         });
-        #     });
-        # </script>
-        # '''
-        # js = '''<script>
-        # console.log('hello');
-        # close_btn = window.parent.document.getElementById("highlighted-0").addEventListener("click", () => {
-        #     error_box = window.parent.document.getElementById("highlighted-1"); 
-        #     error_box.style.display = "none";
-        #     });
-        # </script>
-        # '''
-        # components.html(f'''{js}''')
-
         st.rerun()
 
 
 if st.session_state.display_result:
     # Show global feedback
     st.write(st.session_state.global_feedback)
-
-
-#user_text = 'Hello\n:red[World!]\n'
-
-#user_text = 'Hello<br/><strong>World!</strong></br>'
-
-# bootstrap 4 collapse example
-# components.html(
-#     f"""
-# <!-- Include stylesheet -->
-# <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-
-# <!-- Create the editor container -->
-# <div id="editor">
-# </div>
-
 
