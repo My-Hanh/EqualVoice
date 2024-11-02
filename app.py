@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from algorithm import analyze
-from parser import map_marked_text_to_html
+from parser import map_marked_text_to_html, get_comments_as_html
 
 # with st.sidebar:
 #     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
@@ -29,17 +29,37 @@ style_1 = (".text-with-results {" +
                 "width: 70%;" + 
                 "border: 1px solid grey;" + 
                 "border-radius: 5px;" + 
-                "height: 500px;" + 
                 "padding: 5px;" + 
                 "margin: 5px;" +
                 "}")
 style_2 = """.highlighted {
                 background-color: pink;
+                cursor: pointer;
+            }"""
+style_3 = (".comment-container {" +
+                "height: " +
+                f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
+                "width: 30%;" + 
+                "}")
+style_4 = (".comment-container p {" +
+                "border: 1px solid grey;" + 
+                "border-radius: 5px;" + 
+                "padding: 5px;" + 
+                "margin: 5px;" +
+                "display: none;" +
+                "}")
+style_5 = """.horizontal {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
             }"""
 
 st.write(f'''<style>
             {style_1}
             {style_2}
+            {style_3}
+            {style_4}
+            {style_5}
     </style>''',
     unsafe_allow_html=True
 )
@@ -81,8 +101,29 @@ if not st.session_state.display_result:
 else:
     # Show the text with highlights
     html_with_highlights, all_problems = map_marked_text_to_html(st.session_state.marked_text)
+    comments_as_html = get_comments_as_html(["comment", "todo", "hello"])
     st.session_state.all_problems = all_problems
-    st.write(f"""<div class='text-with-results'>{html_with_highlights}</div>""", unsafe_allow_html=True)
+    st.write(f"""<div class='horizontal'><div class='text-with-results'>{html_with_highlights}</div><div class='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
+
+    js = '''<script>
+        highlights = window.parent.document.getElementsByClassName("highlighted");
+        for (let i = 0; i < highlights.length; i++) {
+            let element = highlights[i];
+            element.addEventListener("click", () => {
+              console.log('hello');
+              for (let j = 0; j < highlights.length; j++) {
+                let commentsDiv = window.parent.document.getElementById("comment-id-" + j);
+                if (i === j) {
+                    commentsDiv.style.display = 'block';
+                } else {
+                    commentsDiv.style.display = 'none';
+                }
+              }
+            });
+        }
+        </script>
+        '''
+    components.html(f'''{js}''')
 
 
 
@@ -132,7 +173,7 @@ with col2:
         st.session_state.global_feedback = global_feedback
         st.session_state.display_result = True
 
-        st.rerun()
+        
 
         # js = '''<script>
         #     highlighted_elements = window.parent.document.getElementsByClassName("highlighted");
@@ -147,15 +188,16 @@ with col2:
         # </script>
         # '''
         # js = '''<script>
+        # console.log('hello');
         # close_btn = window.parent.document.getElementById("highlighted-0").addEventListener("click", () => {
-        #     error_box = window.parent.document.getElementById("loader-block"); 
+        #     error_box = window.parent.document.getElementById("highlighted-1"); 
         #     error_box.style.display = "none";
         #     });
         # </script>
         # '''
-        # st.markdown(f'''{js}''',
-        #     unsafe_allow_html=True
-        # )
+        # components.html(f'''{js}''')
+
+        st.rerun()
 
 
 if st.session_state.display_result:
