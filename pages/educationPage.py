@@ -8,14 +8,14 @@ import streamlit as st
 
 # Create a sidebar for navigation
 st.sidebar.title("Navigation")
-if st.sidebar.button("🔍Analyze"):  # Analyze
+if st.sidebar.button("🔍Analyze"):  
     st.switch_page("app.py")
-if st.sidebar.button("📊Statistics"):  # Overview
-    st.switch_page("statisticPage.py")
-if st.sidebar.button("📚Educational material"):  # Educational material
+if st.sidebar.button("📊Statistics"): 
+    st.switch_page("pages/statisticPage.py")
+if st.sidebar.button("📚Educational material"):  
     st.switch_page("pages/educationPage.py")
-if st.sidebar.button("🎮Exercises"):  # Exercise
-    st.switch_page("gamePage.py")
+if st.sidebar.button("🎮Exercises"):  
+    st.switch_page("pages/gamePage.py")
 
 if st.button(
     label="Back", 
