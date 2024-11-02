@@ -1,9 +1,9 @@
 import streamlit as st
 import streamlit.components.v1 as components
-
 from algorithm import analyze
 from response_parser import map_marked_text_to_html, get_comments_as_html
 from styles import custom_styles, USER_TEXT_INITIAL_HEIGHT, TEXT_WIDTH_WITH_DETAILS, COMMENT_WIDTH_WITH_DETAILS
+
 
 # Custom CSS for theme
 
@@ -64,7 +64,7 @@ if not st.session_state.display_result:
         on_change=None,
         args=None,
         kwargs=None,
-        placeholder="Type here...",
+        placeholder="Type your article here...",
         disabled=False,
         label_visibility="visible"
     )
@@ -74,6 +74,7 @@ else:
     # TODO get comments
     comments_as_html = get_comments_as_html(["comment", "todo", "hello"])
     st.session_state.all_problems = all_problems
+
     st.write(f"""<div class='horizontal'><div class='text-with-results' id='text-with-results'>{html_with_highlights}</div><div class='comment-container' id='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
 
     js = '''<script>
@@ -99,11 +100,14 @@ else:
     components.html(f'''{js}''', height=0)
 
 
+    
+
 
 
 def clear_state():
     st.session_state.marked_text = None
     st.session_state.global_feedback = None
+    st.session_state.all_comments = None
     st.session_state.display_result = False
 
 
@@ -141,9 +145,10 @@ with col3:
         use_container_width=False
     ):
         st.session_state.user_text = user_text
-        marked_text, global_feedback = analyze(user_text)
+        marked_text, global_feedback, all_comments = analyze(user_text)
         st.session_state.marked_text = marked_text
         st.session_state.global_feedback = global_feedback
+        st.session_state.all_comments = all_comments
         st.session_state.display_result = True
 
         st.rerun()
@@ -151,5 +156,15 @@ with col3:
 
 if st.session_state.display_result:
     # Show global feedback
+    st.write("### Global feedback")
     st.write(st.session_state.global_feedback)
+    
+    #To cancel later
+    #show all individual comments
+    st.write("### Breakdown of all possible bias")
+    st.write(st.session_state.all_comments)
+    
+    #show the text
+    st.write("### Text with separators")
+    st.write(st.session_state.marked_text)
 
