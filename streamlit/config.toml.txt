@@ -1,5 +1,8 @@
-primaryColor = "#1E90FF" 
-backgroundColor = "#F0F2F5" 
-secondaryBackgroundColor = "#FFFFFF"  
-textColor = "#000000"  
+base="light"
+primaryColor="#4400ff"
+secondaryBackgroundColor="#f4efff"
+textColor="#4400ff"
 font = "sans serif"  # Font options: 'sans serif', 'serif', 'monospace', or 'courier'
+
+
+
