@@ -39,11 +39,10 @@ if "user_text" not in st.session_state:
 
 
 # Add custom styling
-for custom_style in custom_styles:
-    st.write(
-        f'''<style>{custom_style}</style>''',
-        unsafe_allow_html=True
-    )
+st.write(
+    f'''<style>{''.join(custom_styles)}</style>''',
+    unsafe_allow_html=True
+)
 
 
 
@@ -69,9 +68,7 @@ if not st.session_state.display_result:
 else:
     # Show the text with highlights
     html_with_highlights, all_problems = map_marked_text_to_html(st.session_state.marked_text)
-    # TODO get comments
-    comments_as_html = get_comments_as_html(["comment", "todo", "hello"])
-    st.session_state.all_problems = all_problems
+    comments_as_html = get_comments_as_html(st.session_state.all_comments)
 
     st.write(f"""<div class='horizontal'><div class='text-with-results' id='text-with-results'>{html_with_highlights}</div><div class='comment-container' id='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
 
@@ -180,7 +177,5 @@ else:
         
                 st.rerun()
 
-    
-    
 
 

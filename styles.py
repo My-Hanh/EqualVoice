@@ -16,13 +16,14 @@ style_1 = (".text-with-results {" +
                 "overflow-y: scroll;"
                 "}")
 style_2 = """.highlighted {
-                background-color: #10085e54;
+                background-color: #d5c8fb;
                 cursor: pointer;
             }"""
 style_3 = (".comment-container {" +
                 "height: " +
                 f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
                 f"width: {INITIAL_COMMENT_WIDTH};" + 
+                "overflow-y: scroll;"
                 "}")
 style_4 = (".comment-container p {" +
                 "border: 1px solid grey;" + 

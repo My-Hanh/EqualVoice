@@ -2,6 +2,7 @@ from openai import OpenAI
 import json
 from ast import literal_eval
 
+
 BIAS_SURROUNDING_CHAR = "|"
 
 
@@ -9,6 +10,8 @@ BIAS_SURROUNDING_CHAR = "|"
 
 #marked_text = f"The {BIAS_SURROUNDING_CHAR}cyclist's wife{BIAS_SURROUNDING_CHAR} won a gold medal.\n" + f"The {BIAS_SURROUNDING_CHAR}cyclist's wife{BIAS_SURROUNDING_CHAR} won a gold medal.\n" + f"The {BIAS_SURROUNDING_CHAR}cyclist's wife{BIAS_SURROUNDING_CHAR} won a gold medal."
 # global_feedback = "It looks great"
+
+# The cyclist's wife won a gold medal.
 
 def get_response_from_prompt(client, model, messages, kwargs):
     response = client.chat.completions.create(
@@ -125,8 +128,6 @@ def analyze(user_text):
         print("Something went srong")
         individual_comments = individual_comments.replace('**Second Output:**', '')
         list_of_comments = individual_comments
-    
-        
 
 
     return marked_text, global_feedback, list_of_comments

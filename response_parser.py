@@ -43,6 +43,6 @@ def map_paragraph(marked_paragraph, starting_index):
 def get_comments_as_html(comments):
     result = ""
     for index, comment in enumerate(comments):
-        result += f"<p id='comment-id-{index}'>{comment}</p>"
+        result += f"<p id='comment-id-{index}'><strong>{comment['Text']}</strong><br/><strong>Possible bias:</strong><br/>{comment['Possible bias']}<br/><strong>Suggested improvement:</strong><br/>{comment['Suggested Improvement']}</p>"
 
     return result
