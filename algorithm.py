@@ -24,7 +24,7 @@ def get_response_from_prompt(client, model, messages, kwargs):
     
     
 
-def analyze(user_text):
+def analyze(user_text, openai_api_key):
     """
     
 

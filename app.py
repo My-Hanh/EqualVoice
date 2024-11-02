@@ -24,6 +24,11 @@ if st.sidebar.button("📚Educational material"):
 if st.sidebar.button("🎮Exercise"): 
     st.switch_page("pages/gamePage.py")
 
+"In order to test the solution, you will need an OpenAI API key"
+openai_api_key = st.text_input("OpenAI API Key", key="openai_api_key", type="password")
+"[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
+
+
 # Main content area
 username = "Stella Muster"
 st.title(f"Welcome, {username} 👤")
@@ -155,21 +160,23 @@ if st.session_state.display_result:
 
 else:
     with col3:
-    
-            if st.button(
-                label="Analyze",  
-                key=None,
-                help="Click to analyze your data.",
-                on_click=None,
-                args=None,
-                kwargs=None,
-                type="primary",  
-                icon=None,
-                disabled=False,
-                use_container_width=False
-            ):
+        if st.button(
+            label="Analyze",  
+            key=None,
+            help="Click to analyze your data.",
+            on_click=None,
+            args=None,
+            kwargs=None,
+            type="primary",  
+            icon=None,
+            disabled=False,
+            use_container_width=False
+        ):
+            if not openai_api_key:
+                st.toast("Please provide an OpenAI API key, there is a field at the top of the page", icon="⚠️")
+            else:
                 st.session_state.user_text = user_text
-                marked_text, global_feedback, all_comments = analyze(user_text)
+                marked_text, global_feedback, all_comments = analyze(user_text, openai_api_key)
                 st.session_state.marked_text = marked_text
                 st.session_state.global_feedback = global_feedback
                 st.session_state.all_comments = all_comments
