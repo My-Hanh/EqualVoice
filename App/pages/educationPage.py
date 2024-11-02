@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Nov  2 00:21:36 2024
+Created on Sat Nov  2 09:55:44 2024
+
 """
 
 import streamlit as st
@@ -19,6 +20,6 @@ if st.button(
 ):
     st.switch_page("app.py")
 
-st.title("Statistics Page")
+st.title("Educational material")
 
-st.write("Here you can display statistics and data visualizations.")
+st.write("Here you can read informations about biases.")
