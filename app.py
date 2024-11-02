@@ -146,16 +146,16 @@ with col2:
         #     });
         # </script>
         # '''
-        js = '''<script>
-        close_btn = window.parent.document.getElementById("highlighted-0").addEventListener("click", () => {
-            error_box = window.parent.document.getElementById("loader-block"); 
-            error_box.style.display = "none";
-            });
-        </script>
-        '''
-        st.markdown(f'''{js}''',
-            unsafe_allow_html=True
-        )
+        # js = '''<script>
+        # close_btn = window.parent.document.getElementById("highlighted-0").addEventListener("click", () => {
+        #     error_box = window.parent.document.getElementById("loader-block"); 
+        #     error_box.style.display = "none";
+        #     });
+        # </script>
+        # '''
+        # st.markdown(f'''{js}''',
+        #     unsafe_allow_html=True
+        # )
 
 
 if st.session_state.display_result:
@@ -191,7 +191,3 @@ if st.session_state.display_result:
 #     """,
 #     height=600,
 # )
-
-#st.markdown(user_text)
-
-#st.html(f"""<p>{user_text}</p>""")
