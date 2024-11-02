@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov  1 23:32:37 2024
-"""
-
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -157,3 +152,4 @@ with col3:
 if st.session_state.display_result:
     # Show global feedback
     st.write(st.session_state.global_feedback)
+
