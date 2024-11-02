@@ -2,9 +2,6 @@ from openai import OpenAI
 import json
 from ast import literal_eval
 
-openai_api_key = "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"
-
-
 BIAS_SURROUNDING_CHAR = "|"
 
 
@@ -39,17 +36,18 @@ def analyze(user_text):
         parsed original text with biased sections marked in between BIAS_SURROUNDING_CHAR (ex: |The cyclist's wife won a gold medal|)
     global_feedback : string
         Global feedback about the original text
-    individual_comments : string
-        List of [Content of the problematic section, \n
-         "Possible bias": the possible gender or racial detected bias in this problematic section \n
-         "Suggested Improvement": suggestion to improve the text ]
+    individual_comments : list of Python dictionnary
+        {
+             "Text": "<Content of the problematic section">, \n
+             "Possible bias": "<the possible gender or racial detected bias in this problematic section>" \n
+             "Suggested Improvement": "<suggestion to improve the text ">
+        }
 
     """
     
-    # If both the text input and API key are provided, process the input
-
         
-    #OpenAI settings
+    #General Feedback
+    no_bias_message = "No bias detected in your article. Great job!"
     prompt_1 = f"""I am studying how language in the media shape gender bias. 
     You are an educational tool for journalists to raise awareness about gender or racial biais 
     in their articles. The goal is to flag where's there is possible gender or racial bias in the text of their article 
@@ -57,8 +55,9 @@ def analyze(user_text):
     \n Here is a text from an article: {user_text}.\n\n
     \n Please give me a short general feedback on 1. where there is possible gender or racial bias in this text,
     2. why it is problematic and 3. provide suggestions for improvement.
-    If there is no detected bias, write 'Your article sounds good!' """
+    If there is no detected bias, write as an output: {no_bias_message} """
     
+    #Detailed Feedback
     separator = "------------"
     
     prompt_2 = f"""Here is a text from an article: {user_text}.\n\n
@@ -68,22 +67,21 @@ def analyze(user_text):
     Then, write {separator}
     Second output: go through the problematic sections in between {BIAS_SURROUNDING_CHAR} one by one, 
     and explain shortly why they are possible bias, and give example for improvement. \n\n 
-    This second output should be an array listing all problematic sections, the possible bias
-    and the suggested improvements, with each element formatted like this: \n
+    This second output must be an array listing all problematic sections, the possible bias
+    and the suggested improvements. It must be in JSON format, with each element formatted like this: \n
     {{
          "Text": "<Content of the problematic section">, \n
          "Possible bias": "<the possible gender or racial detected bias in this problematic section>" \n
          "Suggested Improvement": "<suggestion to improve the text ">
     }} \n
-    
-    
     \n\n
     
     Write your final response with the following structure: \n
     Content of First output \n
     {separator} \n
     Content of Second output
-    \n """
+    \n 
+    Do not write 'First output' or 'Second output' in your answer, just write the content."""
     
     
     # Prepare messages for the OpenAI chat model, including a system message and the user prompt
@@ -101,7 +99,7 @@ def analyze(user_text):
     
 
     
-    kwargs = {'max_tokens': 2048,'temperature': 0.5}
+    kwargs = {'max_tokens': 2048,'temperature': 0.2}
     
     client = OpenAI(
     
@@ -121,7 +119,12 @@ def analyze(user_text):
     individual_comments = detailed_feedback.split(sep=separator, maxsplit=-1)[1]
     individual_comments = individual_comments.replace('\n','')
     #transform into a list of Python dict
-    list_of_comments= json.loads(individual_comments)
+    try:
+        list_of_comments= json.loads(individual_comments)
+    except:
+        print("Something went srong")
+        individual_comments = individual_comments.replace('**Second Output:**', '')
+        list_of_comments = individual_comments
     
         
 
