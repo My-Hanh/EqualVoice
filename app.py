@@ -87,7 +87,7 @@ def clear_state():
     st.session_state.display_result = False
 
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns([1, 4, 1])
 
 with col1:
     if st.button(
@@ -107,7 +107,7 @@ with col1:
 
 
 
-with col2:
+with col3:
     if st.button(
         label="Analyze",  
         key=None,
