@@ -39,3 +39,10 @@ def map_paragraph(marked_paragraph, starting_index):
 
 
     return result, problems
+
+def get_comments_as_html(comments):
+    result = ""
+    for index, comment in enumerate(comments):
+        result += f"<p id='comment-id-{index}'>{comment}</p>"
+
+    return result

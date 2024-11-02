@@ -2,7 +2,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from algorithm import analyze
-from parser import map_marked_text_to_html
+from parser import map_marked_text_to_html, get_comments_as_html
+from styles import custom_styles, USER_TEXT_INITIAL_HEIGHT, TEXT_WIDTH_WITH_DETAILS, COMMENT_WIDTH_WITH_DETAILS
 
 # with st.sidebar:
 #     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
@@ -18,44 +19,13 @@ if "display_result" not in st.session_state:
 if "user_text" not in st.session_state:
     st.session_state.user_text = ""
 
-USER_TEXT_INITIAL_HEIGHT = 500
 
-
-
-# Custom styling
-style_1 = (".text-with-results {" +
-                "height: " +
-                f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
-                "width: 70%;" + 
-                "border: 1px solid grey;" + 
-                "border-radius: 5px;" + 
-                "height: 500px;" + 
-                "padding: 5px;" + 
-                "margin: 5px;" +
-                "}")
-style_2 = """.highlighted {
-                background-color: pink;
-            }"""
-
-st.write(f'''<style>
-            {style_1}
-            {style_2}
-    </style>''',
-    unsafe_allow_html=True
-)
-
-# Custom script
-script_1 = (
-    """function show_details() {
-        console.log('hello');
-    }"""
-)
-st.write(f'''<script>
-            {script_1}
-    </script>''',
-    unsafe_allow_html=True
-)
-
+# Add custom styling
+for custom_style in custom_styles:
+    st.write(
+        f'''<style>{custom_style}</style>''',
+        unsafe_allow_html=True
+    )
 
 
 
@@ -81,8 +51,32 @@ if not st.session_state.display_result:
 else:
     # Show the text with highlights
     html_with_highlights, all_problems = map_marked_text_to_html(st.session_state.marked_text)
+    # TODO get comments
+    comments_as_html = get_comments_as_html(["comment", "todo", "hello"])
     st.session_state.all_problems = all_problems
-    st.write(f"""<div class='text-with-results'>{html_with_highlights}</div>""", unsafe_allow_html=True)
+    st.write(f"""<div class='horizontal'><div class='text-with-results' id='text-with-results'>{html_with_highlights}</div><div class='comment-container' id='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
+
+    js = '''<script>
+        highlights = window.parent.document.getElementsByClassName("highlighted");
+        for (let i = 0; i < highlights.length; i++) {
+            let element = highlights[i];
+            element.addEventListener("click", () => {
+              console.log('hello');
+              window.parent.document.getElementById("text-with-results").style.width = "''' + TEXT_WIDTH_WITH_DETAILS + '''";
+              window.parent.document.getElementById("comment-container").style.width = "''' + COMMENT_WIDTH_WITH_DETAILS + '''";
+              for (let j = 0; j < highlights.length; j++) {
+                let commentsDiv = window.parent.document.getElementById("comment-id-" + j);
+                if (i === j) {
+                    commentsDiv.style.display = 'block';
+                } else {
+                    commentsDiv.style.display = 'none';
+                }
+              }
+            });
+        }
+        </script>
+        '''
+    components.html(f'''{js}''', height=0)
 
 
 
@@ -93,7 +87,7 @@ def clear_state():
     st.session_state.display_result = False
 
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns([1, 4, 1])
 
 with col1:
     if st.button(
@@ -113,7 +107,7 @@ with col1:
 
 
 
-with col2:
+with col3:
     if st.button(
         label="Analyze",  
         key=None,
@@ -134,47 +128,8 @@ with col2:
 
         st.rerun()
 
-        # js = '''<script>
-        #     highlighted_elements = window.parent.document.getElementsByClassName("highlighted");
-        #     console.log(highlighted_elements);
-        #     highlighted_elements.forEach(function (element) {
-        #         element.addEventListener("click", (event) => {
-        #             //error_box = window.parent.document.getElementById("loader-block"); 
-        #             //error_box.style.display = "none";
-        #             console.log('hello1');
-        #         });
-        #     });
-        # </script>
-        # '''
-        # js = '''<script>
-        # close_btn = window.parent.document.getElementById("highlighted-0").addEventListener("click", () => {
-        #     error_box = window.parent.document.getElementById("loader-block"); 
-        #     error_box.style.display = "none";
-        #     });
-        # </script>
-        # '''
-        # st.markdown(f'''{js}''',
-        #     unsafe_allow_html=True
-        # )
-
 
 if st.session_state.display_result:
     # Show global feedback
     st.write(st.session_state.global_feedback)
-
-
-#user_text = 'Hello\n:red[World!]\n'
-
-#user_text = 'Hello<br/><strong>World!</strong></br>'
-
-# bootstrap 4 collapse example
-# components.html(
-#     f"""
-# <!-- Include stylesheet -->
-# <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
-
-# <!-- Create the editor container -->
-# <div id="editor">
-# </div>
-
 
