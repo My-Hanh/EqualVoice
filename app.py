@@ -40,7 +40,22 @@ st.write("---")
 if "display_result" not in st.session_state:
     st.session_state.display_result = False
 if "user_text" not in st.session_state:
-    st.session_state.user_text = ""
+    st.session_state.user_text = """Accusing some of her male colleagues of sexism, Los Angeles Councilwoman Laura Chick lashed out at City Hall on Thursday as the “most sexist, good-old-boys work environment that I’ve ever been in.”
+Chick, one of four women on the 15-member panel, made the comments during a luncheon honoring women police officers, an event attended by Mayor Richard Riordan, Police Chief Willie L. Williams and several other top city officials.
+The comment drew isolated applause from the audience of 130 or so administrators, police commanders and other guests, some of whom praised Chick after the luncheon for her comments. About half were women.
+During her address, Chick told the women officers that she understands what it is like to work in “an arena that has traditionally and historically been one for men.”
+When the audience responded with hushed murmurs to her remarks, Chick said: “Have I shocked you?”
+In an interview after the luncheon, Chick said that in the two years she has been in City Hall some of her colleagues have made her feel uncomfortable by making “off-color” jokes, passing “dirty pictures and dirty cartoons” and making condescending remarks during council meetings.
+For example, Chick said that on at least one occasion when a female council member stood to speak out against a proposal in the council chambers, a male council member was heard saying: “It must be that time of month again.” She declined to name any of the men.
+Chick, who represents the west San Fernando Valley, suggested that all council members be required to take “gender sensitivity” training, similar to courses being given to top managers of the Los Angeles police and fire departments.
+Some council members--both men and women--and female department heads echoed Chick’s comments. But no one was willing to identify the men they think have perpetuated the “good-old-boys work environment.”
+“She is absolutely right,” said Councilwoman Rita Walters, who has been on the council for four years and also attended the luncheon. “It’s very much the old boys club.”
+Walters said that even male department heads, who answer to the City Council, have spoken to her and other female council members in a condescending tone, indicating to her that they believe “the issues that female council members espouse are ... not serious issues.”
+A top female city official who frequently appears before the council agreed that the environment in City Hall has made her uncomfortable.
+“There are many instances where the male members of the council have had better access to information than female members,” said the official, who asked not to be named.
+But some city officials said the environment is not much different from that of any large business throughout the nation, and otheres say the atmosphere in City Hall is improving.
+Councilwoman Ruth Galanter, an eight-year council veteran, also described City Hall as “themost sexist work environment I’ve ever been in.” But she said City Hall is reflective of the atmosphere in many places outside government.
+“It’s a microcosm of society,” she said."""
 
 
 # Add custom styling
