@@ -1,4 +1,4 @@
-USER_TEXT_INITIAL_HEIGHT = 500
+USER_TEXT_INITIAL_HEIGHT = 400
 INITIAL_TEXT_WIDTH = "100%"
 TEXT_WIDTH_WITH_DETAILS = "70%"
 INITIAL_COMMENT_WIDTH = "0"
@@ -13,6 +13,7 @@ style_1 = (".text-with-results {" +
                 "border-radius: 5px;" + 
                 "padding: 5px;" + 
                 "margin: 5px;" +
+                "overflow-y: scroll;"
                 "}")
 style_2 = """.highlighted {
                 background-color: #10085e54;

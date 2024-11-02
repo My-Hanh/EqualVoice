@@ -36,26 +36,7 @@ username = "Stella Muster"
 st.title(f"Welcome, {username} 👤")
 st.write("---")
 
-# # Main text area for user input
-# text_area = st.text_area(
-#     label="Enter your text here:",  
-#     value="",  
-#     height=400,  
-#     placeholder="Type here..."
-# )
 
-# # Action buttons
-# col1, col2 = st.columns([3,1])
-    
-# with col2:
-#     subcol1, subcol2 = st.columns([1,1])
-#     with subcol1:
-#         if st.button("Analyze"):
-#             st.write("Analyze button clicked!")  
-   
-#     with subcol2:
-#         if st.button("Publish"):
-#             st.write("Publish button clicked!")
 
 # Initial values of some state variables
 if "display_result" not in st.session_state:
