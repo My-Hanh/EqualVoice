@@ -15,7 +15,7 @@ style_1 = (".text-with-results {" +
                 "margin: 5px;" +
                 "}")
 style_2 = """.highlighted {
-                background-color: pink;
+                background-color: #10085e54;
                 cursor: pointer;
             }"""
 style_3 = (".comment-container {" +
