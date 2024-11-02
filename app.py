@@ -113,58 +113,76 @@ def clear_state():
 
 col1, col2, col3 = st.columns([1, 4, 1])
 
-with col1:
-    if st.button(
-        label="Back",
-        key=None,
-        help="Click to go back.",
-        on_click=None,
-        args=None,
-        kwargs=None,
-        type="secondary",  
-        icon=None,
-        disabled=False,
-        use_container_width=False
-    ):
-        clear_state()
-        st.rerun()
-
-
-
-with col3:
-    if st.button(
-        label="Analyze",  
-        key=None,
-        help="Click to analyze your data.",
-        on_click=None,
-        args=None,
-        kwargs=None,
-        type="primary",  
-        icon=None,
-        disabled=False,
-        use_container_width=False
-    ):
-        st.session_state.user_text = user_text
-        marked_text, global_feedback, all_comments = analyze(user_text)
-        st.session_state.marked_text = marked_text
-        st.session_state.global_feedback = global_feedback
-        st.session_state.all_comments = all_comments
-        st.session_state.display_result = True
-
-        st.rerun()
-
-
 if st.session_state.display_result:
+    with col1:
+        if st.button(
+            label="Back",
+            key=None,
+            help="Click to go back.",
+            on_click=None,
+            args=None,
+            kwargs=None,
+            type="secondary",  
+            icon=None,
+            disabled=False,
+            use_container_width=False
+        ):
+            clear_state()
+            st.rerun()
+            
+    with col3:
+        if st.button(
+            label="Publish",  
+            key=None,
+            help="Click to publish your text.",
+            on_click=None,
+            args=None,
+            kwargs=None,
+            type="primary",  
+            icon=None,
+            disabled=False,
+            use_container_width=False
+        ):
+            st.write("Published")
+        
     # Show global feedback
     st.write("### Global feedback")
     st.write(st.session_state.global_feedback)
-    
+
     #To cancel later
     #show all individual comments
     st.write("### Breakdown of all possible bias")
     st.write(st.session_state.all_comments)
-    
+
     #show the text
     st.write("### Text with separators")
     st.write(st.session_state.marked_text)
+
+else:
+    with col3:
+    
+            if st.button(
+                label="Analyze",  
+                key=None,
+                help="Click to analyze your data.",
+                on_click=None,
+                args=None,
+                kwargs=None,
+                type="primary",  
+                icon=None,
+                disabled=False,
+                use_container_width=False
+            ):
+                st.session_state.user_text = user_text
+                marked_text, global_feedback, all_comments = analyze(user_text)
+                st.session_state.marked_text = marked_text
+                st.session_state.global_feedback = global_feedback
+                st.session_state.all_comments = all_comments
+                st.session_state.display_result = True
+        
+                st.rerun()
+
+    
+    
+
 
