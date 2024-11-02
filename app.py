@@ -5,14 +5,12 @@ from response_parser import map_marked_text_to_html, get_comments_as_html
 from styles import custom_styles, USER_TEXT_INITIAL_HEIGHT, TEXT_WIDTH_WITH_DETAILS, COMMENT_WIDTH_WITH_DETAILS
 
 
-# Custom CSS for theme
-
 
 # Set page configuration
 st.set_page_config(
     page_title="Media Bias Tool",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
 )
 
 # Create a sidebar for navigation
@@ -49,7 +47,7 @@ for custom_style in custom_styles:
 
 
 
-st.title("Text Bias Detector")
+#st.title("Text Bias Detector")
 
 if not st.session_state.display_result:
     # Show empty textarea for user to enter the initial data.
