@@ -1,4 +1,5 @@
 from openai import OpenAI
+import json
 from ast import literal_eval
 
 openai_api_key = "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"
@@ -38,6 +39,10 @@ def analyze(user_text):
         parsed original text with biased sections marked in between BIAS_SURROUNDING_CHAR (ex: |The cyclist's wife won a gold medal|)
     global_feedback : string
         Global feedback about the original text
+    individual_comments : string
+        List of [Content of the problematic section, \n
+         "Possible bias": the possible gender or racial detected bias in this problematic section \n
+         "Suggested Improvement": suggestion to improve the text ]
 
     """
     
@@ -65,9 +70,11 @@ def analyze(user_text):
     and explain shortly why they are possible bias, and give example for improvement. \n\n 
     This second output should be an array listing all problematic sections, the possible bias
     and the suggested improvements, with each element formatted like this: \n
-    [Content of the problematic section, \n
-     "Possible bias": the possible gender or racial detected bias in this problematic section \n
-     "Suggested Improvement": suggestion to improve the text ] \n
+    {{
+         "Text": "<Content of the problematic section">, \n
+         "Possible bias": "<the possible gender or racial detected bias in this problematic section>" \n
+         "Suggested Improvement": "<suggestion to improve the text ">
+    }} \n
     
     
     \n\n
@@ -107,14 +114,18 @@ def analyze(user_text):
     
     detailed_feedback = get_response_from_prompt(client, model, messages_2, kwargs)
     
+    #extract the marked text from ChatGPT response
     marked_text = detailed_feedback.split(sep=separator, maxsplit=-1)[0]
-    individual_comments = detailed_feedback.split(sep=separator, maxsplit=-1)[1]
-        
-    # individual_comments = get_response_from_prompt(client, model, messages_3, kwargs)
-    # print(marked_text)
     
-    # TODO
+    #extract all individual comments
+    individual_comments = detailed_feedback.split(sep=separator, maxsplit=-1)[1]
+    individual_comments = individual_comments.replace('\n','')
+    #transform into a list of Python dict
+    list_of_comments= json.loads(individual_comments)
+    
+        
 
-    return marked_text, global_feedback, individual_comments
+
+    return marked_text, global_feedback, list_of_comments
 
 
