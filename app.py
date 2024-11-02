@@ -3,6 +3,7 @@ import streamlit.components.v1 as components
 
 from algorithm import analyze
 from parser import map_marked_text_to_html, get_comments_as_html
+from styles import custom_styles, USER_TEXT_INITIAL_HEIGHT, TEXT_WIDTH_WITH_DETAILS, COMMENT_WIDTH_WITH_DETAILS
 
 # with st.sidebar:
 #     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
@@ -18,68 +19,13 @@ if "display_result" not in st.session_state:
 if "user_text" not in st.session_state:
     st.session_state.user_text = ""
 
-USER_TEXT_INITIAL_HEIGHT = 500
-INITIAL_TEXT_WIDTH = "100%"
-TEXT_WIDTH_WITH_DETAILS = "70%"
-INITIAL_COMMENT_WIDTH = "0"
-COMMENT_WIDTH_WITH_DETAILS = "30%"
 
-
-
-# Custom styling
-style_1 = (".text-with-results {" +
-                "height: " +
-                f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
-                f"width: {INITIAL_TEXT_WIDTH};" + 
-                "border: 1px solid grey;" + 
-                "border-radius: 5px;" + 
-                "padding: 5px;" + 
-                "margin: 5px;" +
-                "}")
-style_2 = """.highlighted {
-                background-color: pink;
-                cursor: pointer;
-            }"""
-style_3 = (".comment-container {" +
-                "height: " +
-                f"{USER_TEXT_INITIAL_HEIGHT}px;" + 
-                f"width: {INITIAL_COMMENT_WIDTH};" + 
-                "}")
-style_4 = (".comment-container p {" +
-                "border: 1px solid grey;" + 
-                "border-radius: 5px;" + 
-                "padding: 5px;" + 
-                "margin: 5px;" +
-                "display: none;" +
-                "}")
-style_5 = """.horizontal {
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-            }"""
-
-st.write(f'''<style>
-            {style_1}
-            {style_2}
-            {style_3}
-            {style_4}
-            {style_5}
-    </style>''',
-    unsafe_allow_html=True
-)
-
-# Custom script
-script_1 = (
-    """function show_details() {
-        console.log('hello');
-    }"""
-)
-st.write(f'''<script>
-            {script_1}
-    </script>''',
-    unsafe_allow_html=True
-)
-
+# Add custom styling
+for custom_style in custom_styles:
+    st.write(
+        f'''<style>{custom_style}</style>''',
+        unsafe_allow_html=True
+    )
 
 
 
@@ -105,6 +51,7 @@ if not st.session_state.display_result:
 else:
     # Show the text with highlights
     html_with_highlights, all_problems = map_marked_text_to_html(st.session_state.marked_text)
+    # TODO get comments
     comments_as_html = get_comments_as_html(["comment", "todo", "hello"])
     st.session_state.all_problems = all_problems
     st.write(f"""<div class='horizontal'><div class='text-with-results' id='text-with-results'>{html_with_highlights}</div><div class='comment-container' id='comment-container'>{comments_as_html}</div></div>""", unsafe_allow_html=True)
