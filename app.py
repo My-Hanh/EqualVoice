@@ -177,17 +177,4 @@ if st.session_state.display_result:
 # <div id="editor">
 # </div>
 
-# <!-- Include the Quill library -->
-# <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
-# <!-- Initialize Quill editor -->
-# <script>
-#   const quill = new Quill('#editor', {
-#     "{theme: 'snow'}"
-#   });
-#   quill.setText({user_text});
-#   quill.formatText(0, 5, 'bold', true);
-# </script>
-#     """,
-#     height=600,
-# )
