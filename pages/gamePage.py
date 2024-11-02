@@ -6,6 +6,17 @@ Created on Sat Nov  2 09:47:24 2024
 
 import streamlit as st
 
+# Create a sidebar for navigation
+st.sidebar.title("Navigation")
+if st.sidebar.button("🔍Analyze"):  # Analyze
+    st.switch_page("app.py")
+if st.sidebar.button("📊Statistics"):  # Overview
+    st.switch_page("statisticPage.py")
+if st.sidebar.button("📚Educational material"):  # Educational material
+    st.switch_page("pages/educationPage.py")
+if st.sidebar.button("🎮Exercises"):  # Exercise
+    st.switch_page("gamePage.py")
+
 if st.button(
     label="Back", 
     key=None,
